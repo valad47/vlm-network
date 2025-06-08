@@ -79,16 +79,7 @@ int vlm_RequestGet(lua_State *L){
     return 2;
 }
 
-int gc_cycle = 0;
-
 int vlm_RequestPost(lua_State *L) {
-    if(gc_cycle == 0) {
-        lua_gc(L, LUA_GCSTOP, 0);
-    } else if (gc_cycle == 2) {
-        //lua_gc(L, LUA_GCCOLLECT, 0);
-        gc_cycle = 0;
-    }
-    gc_cycle++;
     struct MemoryStruct body = {0}, header = {0};
     body.memory = malloc(1);
     header.memory = malloc(1);
@@ -135,13 +126,6 @@ int vlm_RequestPost(lua_State *L) {
 }
 
 int vlm_RequestPostForm(lua_State *L) {
-    if(gc_cycle == 0) {
-        lua_gc(L, LUA_GCSTOP, 0);
-    } else if (gc_cycle == 2) {
-        //lua_gc(L, LUA_GCCOLLECT, 0);
-        gc_cycle = 0;
-    }
-    gc_cycle++;
     struct MemoryStruct body = {0}, header = {0};
     body.memory = malloc(1);
     header.memory = malloc(1);
