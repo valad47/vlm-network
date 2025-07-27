@@ -11,6 +11,8 @@
 #include "lua.h"
 #include "lualib.h"
 
+#define TIMEOUT 15
+
 struct MemoryStruct {
   char *memory;
   size_t size;
@@ -47,6 +49,7 @@ int vlm_RequestGet(lua_State *L){
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &body);
     curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, WriteMemoryCallback);
     curl_easy_setopt(handle, CURLOPT_HEADERDATA, &header);
+    curl_easy_setopt(handle, CURLOPT_TIMEOUT, TIMEOUT);
 
     struct curl_slist *list = NULL;
     if(lua_istable(L, 2)) {
@@ -93,6 +96,7 @@ int vlm_RequestPost(lua_State *L) {
     curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, WriteMemoryCallback);
     curl_easy_setopt(handle, CURLOPT_HEADERDATA, &header);
     curl_easy_setopt(handle, CURLOPT_POSTFIELDS, data);
+    curl_easy_setopt(handle, CURLOPT_TIMEOUT, TIMEOUT);
 
     struct curl_slist *list = NULL;
     if(lua_istable(L, 2)) {
@@ -137,6 +141,7 @@ int vlm_RequestPostForm(lua_State *L) {
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &body);
     curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, WriteMemoryCallback);
     curl_easy_setopt(handle, CURLOPT_HEADERDATA, &header);
+    curl_easy_setopt(handle, CURLOPT_TIMEOUT, TIMEOUT);
 
     curl_mime *mime = curl_mime_init(handle);
     if(lua_istable(L, 2)) {
