@@ -11,7 +11,7 @@
 #include "lua.h"
 #include "lualib.h"
 
-#define TIMEOUT 15
+#define TIMEOUT 60
 
 struct MemoryStruct {
   char *memory;
@@ -43,7 +43,7 @@ int vlm_RequestGet(lua_State *L){
 
     CURL *handle = curl_easy_init();
     curl_easy_setopt(handle, CURLOPT_URL, luaL_checkstring(L, 1));
-    curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, CURLFOLLOW_ALL);
+    curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(handle, CURLOPT_HTTPGET, 1);
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &body);
