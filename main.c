@@ -55,7 +55,7 @@ int vlm_RequestGet(lua_State *L){
     if(lua_istable(L, 2)) {
         lua_pushnil(L);
         while(lua_next(L, 2) != 0) {
-            curl_slist_append(list, luaL_checkstring(L, -1));
+            list = curl_slist_append(list, luaL_checkstring(L, -1));
             lua_pop(L, 1);
         }
     }
